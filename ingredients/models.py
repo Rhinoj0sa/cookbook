@@ -18,15 +18,17 @@ class Ingredient(models.Model):
     category = models.ForeignKey(
         Category, related_name="ingredients", on_delete=models.CASCADE
     )
+    qty = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.category}"
 
 
 class Chef(models.Model):
     name = models.CharField(max_length=100)
     speciality = models.CharField(max_length=30)
     stars = models.IntegerField(default=0)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name

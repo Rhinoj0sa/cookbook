@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ingredients.apps.IngredientsConfig',
     'graphene_django',
+    'django_extensions',
 
 ]
 

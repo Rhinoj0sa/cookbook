@@ -1,7 +1,6 @@
 # cookbook/schema.py
 import graphene
 from graphene_django import DjangoObjectType
-
 from ingredients.models import Category, Ingredient
 
 
@@ -18,15 +17,16 @@ class IngredientType(DjangoObjectType):
         fields = ("id", "name", "notes", "category")
 
 
+# esto iria en schema.py
 class Query(graphene.ObjectType):
-    all_ingredients = graphene.List(IngredientType)
-    category_by_name = graphene.Field(CategoryType, name=graphene.String(required=True))
+    todos_los_ingredientes = graphene.List(IngredientType)
+    categoria_by_name = graphene.Field(CategoryType, name=graphene.String(required=True))
 
-    def resolve_all_ingredients(self, info):
+    def resolve_todos_los_ingredientes(root, info):
         # We can easily optimize query count in the resolve method
-        return Ingredient.objects.select_related("category").all()
+        return Ingredient.objects.all()
 
-    def resolve_category_by_name(self, info, name):
+    def resolve_categoria_by_name(root, info, name):
         try:
             return Category.objects.get(name=name)
         except Category.DoesNotExist:
